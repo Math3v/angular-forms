@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { MinValidatorDirective } from './min-validator.directive';
 import { MaxValidatorDirective } from './max-validator.directive';
+import { EqualToDirective } from './equal-to.directive';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { MaxValidatorDirective } from './max-validator.directive';
   declarations: [
     TemplateFormComponent,
     MinValidatorDirective,
-    MaxValidatorDirective
+    MaxValidatorDirective,
+    EqualToDirective
   ],
   exports: [
     TemplateFormComponent

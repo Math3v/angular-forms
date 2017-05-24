@@ -6,9 +6,11 @@
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" class="form-control" name="name" id="name" [(ngModel)]="user.name" #name="ngModel" required>
-    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-      Name is required
-    </div>
+      <div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+        <div [hidden]="!name.errors.required">
+          Name is required
+        </div>
+      </div>
   </div>
 
   <fieldset>

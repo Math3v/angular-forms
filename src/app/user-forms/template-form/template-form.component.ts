@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { User } from '../../models/User';
+import { User, emptyUser } from '../../models/User';
 
 @Component({
   selector: 'app-template-form',
@@ -17,15 +17,7 @@ export class TemplateFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.user = {
-      name: '',
-      address: {
-        street: '',
-        number: 42
-      },
-      password: '',
-      passwordConfirmation: ''
-    }
+    this.user = emptyUser();
   }
 
 }

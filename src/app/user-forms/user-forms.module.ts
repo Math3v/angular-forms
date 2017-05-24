@@ -1,25 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { MinValidatorDirective } from './min-validator.directive';
 import { MaxValidatorDirective } from './max-validator.directive';
 import { EqualToDirective } from './equal-to.directive';
+import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     TemplateFormComponent,
     MinValidatorDirective,
     MaxValidatorDirective,
-    EqualToDirective
+    EqualToDirective,
+    ReactiveFormComponent
   ],
   exports: [
-    TemplateFormComponent
+    TemplateFormComponent,
+    ReactiveFormComponent
   ]
 })
 export class UserFormsModule { }

@@ -50,7 +50,7 @@
 
   <div class="form-group">
     <label for="password">Password: </label>
-    <input type="text" class="form-control" name="password" id="password" [(ngModel)]="user.address.password" #password="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="userForm">
+    <input type="text" class="form-control" name="password" id="password" [(ngModel)]="user.address.password" #password="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="passwordConfirmation">
     <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
       <div [hidden]="!password.errors.required">
         Password is required
@@ -58,18 +58,24 @@
       <div [hidden]="!password.errors.pattern">
         At least one number, one uppercase and lowercase letter and at least 8 characters long
       </div>
+      <div [hidden]="!password.errors.equalToControl">
+        Password needs to match password confirmation
+      </div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="passwordConfirmation">Password confirmation: </label>
-    <input type="text" class="form-control" name="passwordConfirmation" id="passwordConfirmation" [(ngModel)]="user.address.passwordConfirmation" #passwordConfirmation="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="userForm">
+    <input type="text" class="form-control" name="passwordConfirmation" id="passwordConfirmation" [(ngModel)]="user.address.passwordConfirmation" #passwordConfirmation="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="password">
     <div *ngIf="passwordConfirmation.errors && (passwordConfirmation.dirty || passwordConfirmation.touched)" class="alert alert-danger">
       <div [hidden]="!passwordConfirmation.errors.required">
         Password confirmation is required
       </div>
       <div [hidden]="!passwordConfirmation.errors.pattern">
         At least one number, one uppercase and lowercase letter and at least 8 characters long
+      </div>
+      <div [hidden]="!passwordConfirmation.errors.equalToControl">
+        Password confirmation needs to match password
       </div>
     </div>
   </div>

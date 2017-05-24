@@ -1,4 +1,4 @@
-import { Validator, AbstractControl, NG_VALIDATORS, NgForm } from '@angular/forms';
+import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 import { Directive, Input } from '@angular/core';
 
 @Directive({
@@ -11,34 +11,31 @@ import { Directive, Input } from '@angular/core';
 })
 export class EqualToDirective implements Validator {
 
-  @Input() equalToControl: NgForm;
+  @Input() equalToControl: AbstractControl;
 
   constructor() { }
 
   validate(control: AbstractControl): {[key: string]: any} {
-    let passwordControl: AbstractControl = this.getControl('password');
-    let passwordConfirmControl: AbstractControl = this.getControl('passwordConfirmation');
+    let thisControl: AbstractControl = control;
+    let thatControl: AbstractControl = this.equalToControl;
 
-    if( this.valuesEqual(passwordControl, passwordConfirmControl) ) {
-      let controlToUpdate = this.shouldUpdate(passwordControl, passwordConfirmControl);
+    if( this.valuesEqual(thisControl, thatControl) ) {
+      let controlToUpdate = this.toUpdate(thisControl, thatControl);
       if( controlToUpdate ) {
-        controlToUpdate.setValue( controlToUpdate.value );
+        // TS Hack to access FormControl of AbstractControl
+        ( controlToUpdate as any ).control.setValue( controlToUpdate.value );
       }
       return null;
     } else {
-      return { 'equalToControl': false };
+      return { 'equalToControl': 'Controls need to match' };
     }
-  }
-
-  private getControl(controlName: string): AbstractControl {
-    return this.equalToControl.controls[controlName];
   }
 
   private valuesEqual(a: AbstractControl, b: AbstractControl): boolean {
     return a.value && b.value && a.value === b.value;
   }
 
-  private shouldUpdate(a: AbstractControl, b: AbstractControl): AbstractControl {
+  private toUpdate(a: AbstractControl, b: AbstractControl): AbstractControl {
     if( a.invalid && b.valid ) {
       return a;
     } else if( a.valid && b.invalid) {

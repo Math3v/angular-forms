@@ -43,8 +43,17 @@ export class ReactiveFormComponent implements OnInit {
 
   ngOnInit() {
     this.user = emptyUser();
-    this.userForm = this.fb.group({
-      name: [this.user.name, Validators.required],
+    this.userForm = this.buildForm();
+    this.userForm.valueChanges.subscribe( _ => {
+      this.validateControls( this.userForm.controls );
+    });
+  }
+
+  buildForm(): FormGroup {
+    return this.fb.group({
+      name: [this.user.name,
+        Validators.required
+      ],
       address: this.fb.group({
         street: [this.user.address.street, [
           Validators.required,
@@ -58,39 +67,48 @@ export class ReactiveFormComponent implements OnInit {
         ]]
       })
     });
-    
-    this.userForm.valueChanges.subscribe(data => {
-      this.checkControls( this.userForm.controls );
+  }
+
+  validateControls(controls): void {
+    Object.keys( controls ).map(controlName => {
+      let control = controls[controlName];
+
+      if( this.shouldNestDeeper(control) ) {
+        this.validateControls( control.controls );
+      } else {
+        delete this.formErrors[controlName];
+        if( this.hasErrors(control) ) {
+          this.formErrors[controlName] = this.getErrorMessages(controlName, control.errors);
+        }
+      }
     });
   }
 
-  private checkControls(controls): void {
-    for( let controlName in controls ) {
-      let control = controls[controlName];
-      if( control.constructor.name === 'FormGroup' ) {
-        this.checkControls( control.controls );
-      } else {
-        delete this.formErrors[controlName];
-        if( control && control.dirty && !control.valid ) {
-          this.updateFormErrors( controlName, control.errors );
-        }
-      }
-    }
+  private shouldNestDeeper(control: any): boolean {
+    return control.constructor.name === 'FormGroup'
+      && Object.keys( control.controls ).length > 0;
   }
 
-  private updateFormErrors(controlName: string, controlErrors): void {
-    this.formErrors[controlName] = this.getErrorMessage(controlName, controlErrors);
+  private hasErrors(control: any): boolean {
+    return control && control.dirty && !control.valid;
   }
 
-  private getErrorMessage(controlName: string, errorObject: object): Array<string> {
-    const errorMessages = {
+  private getErrorMessages(controlName: string, errorObject: object): Array<string> {
+    const errorMessages = this.errorMessages();
+    return Object.keys( errorObject ).map(errorName => {
+      return errorMessages[controlName][errorName];
+    });
+  }
+
+  private errorMessages(): object {
+    return {
       'name': {
         'required': 'Name is required'
       },
       'street': {
         'required': 'Street is required',
         'minlength': 'Street must be at least 3 characters long',
-        'pattern': 'Must contain letters'
+        'pattern': 'Must contain only letters'
       },
       'number': {
         'required': 'Number is required',
@@ -98,11 +116,5 @@ export class ReactiveFormComponent implements OnInit {
         'max': 'Number must be less than 200'
       }
     };
-
-    let errors = Object.keys( errorObject ).map(errorName => {
-      return errorMessages[controlName][errorName];
-    });
-
-    return errors;
   }
 }

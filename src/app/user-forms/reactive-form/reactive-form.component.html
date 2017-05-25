@@ -6,11 +6,9 @@
   <div class="form-group">
     <label for="name">Name: </label>
     <input type="text" class="form-control" formControlName="name">
-    <div *ngIf="formErrors['name']" class="alert alert-danger">
-      <div *ngFor="let error of formErrors['name']">
+      <div *ngFor="let error of formErrors['name']" class="alert alert-danger">
         {{ error }}
       </div>
-    </div>
   </div>
 
   <fieldset formGroupName="address">
@@ -19,20 +17,16 @@
     <div class="form-group">
       <label for="street">Street: </label>
       <input type="text" class="form-control" formControlName="street">
-      <div *ngIf="formErrors['street']" class="alert alert-danger">
-        <div *ngFor="let error of formErrors['street']">
-          {{ error }}
-        </div>
+      <div *ngFor="let error of formErrors['street']" class="alert alert-danger">
+        {{ error }}
       </div>
     </div>
 
     <div class="form-group">
       <label for="number">Number: </label>
       <input type="number" class="form-control" formControlName="number">
-      <div *ngIf="formErrors['number']" class="alert alert-danger">
-        <div *ngFor="let error of formErrors['number']">
-          {{ error }}
-        </div>
+      <div *ngFor="let error of formErrors['number']" class="alert alert-danger">
+        {{ error }}
       </div>
     </div>
   </fieldset>

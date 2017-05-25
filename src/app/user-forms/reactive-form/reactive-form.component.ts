@@ -24,6 +24,12 @@ function maxValidatorFactory(max: number): ValidatorFn {
   };
 }
 
+function passwordValidatorFactory(controlName: string, validatorName: string): ValidatorFn {
+  return (group: FormGroup): {[key: string]: any} => {
+    return group.get(controlName).value === group.get(validatorName).value ? null : { 'mismatch': true };
+  };
+}
+
 @Component({
   selector: 'app-reactive-form',
   templateUrl: './reactive-form.component.html',
@@ -65,7 +71,17 @@ export class ReactiveFormComponent implements OnInit {
           minValidatorFactory(5),
           maxValidatorFactory(200)
         ]]
-      })
+      }),
+      passwords: this.fb.group({
+        password: ['', [
+          Validators.required,
+          //Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
+        ]],
+        passwordConfirmation: ['', [
+          Validators.required,
+          //Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
+        ]]
+      }, { validator: passwordValidatorFactory('password', 'passwordConfirmation') })
     });
   }
 
@@ -75,11 +91,11 @@ export class ReactiveFormComponent implements OnInit {
 
       if( this.shouldNestDeeper(control) ) {
         this.validateControls( control.controls );
-      } else {
-        delete this.formErrors[controlName];
-        if( this.hasErrors(control) ) {
-          this.formErrors[controlName] = this.getErrorMessages(controlName, control.errors);
-        }
+      }
+
+      delete this.formErrors[controlName];
+      if( this.hasErrors(control) ) {
+        this.formErrors[controlName] = this.getErrorMessages(controlName, control.errors);
       }
     });
   }
@@ -90,7 +106,7 @@ export class ReactiveFormComponent implements OnInit {
   }
 
   private hasErrors(control: any): boolean {
-    return control && control.dirty && !control.valid;
+    return control && control.dirty && !control.valid && control.errors;
   }
 
   private getErrorMessages(controlName: string, errorObject: object): Array<string> {
@@ -114,6 +130,17 @@ export class ReactiveFormComponent implements OnInit {
         'required': 'Number is required',
         'min': 'Number must be at least 5',
         'max': 'Number must be less than 200'
+      },
+      'passwords': {
+        'mismatch': 'Password and password confirmation must match'
+      },
+      'password': {
+        'required': 'Password is required',
+        'pattern': 'At least one number, one uppercase and lowercase letter and at least 8 characters long'
+      },
+      'passwordConfirmation': {
+        'required': 'Password confirmation is required',
+        'pattern': 'At least one number, one uppercase and lowercase letter and at least 8 characters long'
       }
     };
   }

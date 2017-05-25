@@ -30,6 +30,29 @@
       </div>
     </div>
   </fieldset>
+
+  <div formGroupName="passwords">
+    <div class="form-group">
+      <label for="password">Password: </label>
+      <input type="text" class="form-control" formControlName="password">
+      <div *ngFor="let error of formErrors['password']" class="alert alert-danger">
+        {{ error }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="passwordConfirmation">Password confirmation: </label>
+      <input type="text" class="form-control" formControlName="passwordConfirmation">
+      <div *ngFor="let error of formErrors['passwordConfirmation']" class="alert alert-danger">
+        {{ error }}
+      </div>
+    </div>
+
+    <div *ngFor="let error of formErrors['passwords']" class="alert alert-danger">
+      {{ error }}
+    </div>
+  </div>
+
 </form>
 
 <br>

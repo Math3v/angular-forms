@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { EqualToDirective } from '../equal-to.directive';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TemplateFormComponent } from './template-form.component';
@@ -8,7 +10,13 @@ describe('TemplateFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TemplateFormComponent ]
+      imports: [
+        FormsModule
+      ],
+      declarations: [
+        TemplateFormComponent,
+        EqualToDirective
+      ]
     })
     .compileComponents();
   }));

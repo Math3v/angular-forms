@@ -17,7 +17,7 @@ function maxValidatorFactory(max: number): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
 
     if( control && control.value > max ) {
-      return { 'min': `Number must be less than ${max}` }
+      return { 'max': `Number must be less than ${max}` }
     } else {
       return null;
     }
@@ -53,7 +53,8 @@ export class ReactiveFormComponent implements OnInit {
         ]],
         number: [this.user.address.number, [
           Validators.required,
-          minValidatorFactory(5)
+          minValidatorFactory(5),
+          maxValidatorFactory(200)
         ]]
       })
     });
@@ -66,15 +67,42 @@ export class ReactiveFormComponent implements OnInit {
   private checkControls(controls): void {
     for( let controlName in controls ) {
       let control = controls[controlName];
-      console.log( control );
       if( control.constructor.name === 'FormGroup' ) {
         this.checkControls( control.controls );
       } else {
         delete this.formErrors[controlName];
-        if( control && control.touched && !control.valid ) {
-          console.log( control.errors );
+        if( control && control.dirty && !control.valid ) {
+          this.updateFormErrors( controlName, control.errors );
         }
       }
     }
+  }
+
+  private updateFormErrors(controlName: string, controlErrors): void {
+    this.formErrors[controlName] = this.getErrorMessage(controlName, controlErrors);
+  }
+
+  private getErrorMessage(controlName: string, errorObject: object): Array<string> {
+    const errorMessages = {
+      'name': {
+        'required': 'Name is required'
+      },
+      'street': {
+        'required': 'Street is required',
+        'minlength': 'Street must be at least 3 characters long',
+        'pattern': 'Must contain letters'
+      },
+      'number': {
+        'required': 'Number is required',
+        'min': 'Number must be at least 5',
+        'max': 'Number must be less than 200'
+      }
+    };
+
+    let errors = Object.keys( errorObject ).map(errorName => {
+      return errorMessages[controlName][errorName];
+    });
+
+    return errors;
   }
 }

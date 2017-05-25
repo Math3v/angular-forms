@@ -7,9 +7,9 @@
     <label for="name">Name: </label>
     <input type="text" class="form-control" formControlName="name">
     <div *ngIf="formErrors['name']" class="alert alert-danger">
-      <!-- div *ngFor="let error of formErrors['name']">
+      <div *ngFor="let error of formErrors['name']">
         {{ error }}
-      </div -->
+      </div>
     </div>
   </div>
 
@@ -20,9 +20,9 @@
       <label for="street">Street: </label>
       <input type="text" class="form-control" formControlName="street">
       <div *ngIf="formErrors['street']" class="alert alert-danger">
-        <!-- div *ngFor="let error of formErrors['street']">
+        <div *ngFor="let error of formErrors['street']">
           {{ error }}
-        </div -->
+        </div>
       </div>
     </div>
 
@@ -30,9 +30,9 @@
       <label for="number">Number: </label>
       <input type="number" class="form-control" formControlName="number">
       <div *ngIf="formErrors['number']" class="alert alert-danger">
-        <!-- div *ngFor="let error of formErrors['number']">
+        <div *ngFor="let error of formErrors['number']">
           {{ error }}
-        </div -->
+        </div>
       </div>
     </div>
   </fieldset>

@@ -75,11 +75,11 @@ export class ReactiveFormComponent implements OnInit {
       passwords: this.fb.group({
         password: ['', [
           Validators.required,
-          //Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
+          Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
         ]],
         passwordConfirmation: ['', [
           Validators.required,
-          //Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
+          Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
         ]]
       }, { validator: passwordValidatorFactory('password', 'passwordConfirmation') })
     });

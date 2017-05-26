@@ -1,5 +1,7 @@
+import { ValidatorFn } from '@angular/forms';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
-import { Directive, OnChanges, OnInit, Input } from '@angular/core';
+import { Directive, OnInit, Input } from '@angular/core';
+import { minValidatorFactory } from './custom-validators';
 
 @Directive({
   selector: 'input[min]',
@@ -9,17 +11,19 @@ import { Directive, OnChanges, OnInit, Input } from '@angular/core';
     multi: true
   }]
 })
-export class MinValidatorDirective implements Validator {
+export class MinValidatorDirective implements Validator, OnInit {
 
   @Input() min: number;
 
+  validator: ValidatorFn;
+
   constructor() { }
 
+  ngOnInit() {
+    this.validator = minValidatorFactory( this.min );
+  }
+
   validate(control: AbstractControl): {[key: string]: any} {
-    if( control.value && control.value > this.min ) {
-      return null;
-    } else {
-      return { 'min': `Must be at least ${this.min}` }
-    }
+    return this.validator( control );
   }
 }

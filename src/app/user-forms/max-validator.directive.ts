@@ -1,5 +1,6 @@
-import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
-import { Directive, OnChanges, OnInit, Input } from '@angular/core';
+import { Validator, AbstractControl, NG_VALIDATORS, ValidatorFn } from '@angular/forms';
+import { Directive, OnInit, Input } from '@angular/core';
+import { maxValidatorFactory } from './custom-validators';
 
 @Directive({
   selector: 'input[max]',
@@ -9,17 +10,19 @@ import { Directive, OnChanges, OnInit, Input } from '@angular/core';
     multi: true
   }]
 })
-export class MaxValidatorDirective implements Validator {
+export class MaxValidatorDirective implements Validator, OnInit {
 
   @Input() max: number;
 
+  validator: ValidatorFn;
+
   constructor() { }
 
+  ngOnInit() {
+    this.validator = maxValidatorFactory( this.max );
+  }
+
   validate(control: AbstractControl): {[key: string]: any} {
-    if( control.value && control.value < this.max ) {
-      return null;
-    } else {
-      return { 'max': `Must be less than ${this.max}` }
-    }
+    return this.validator( control );
   }
 }

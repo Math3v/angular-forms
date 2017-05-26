@@ -40,7 +40,7 @@ describe('ReactiveFormComponent', () => {
     expect( form.get('passwords').get('passwordConfirmation') ).toBeTruthy();
   });
 
-  it('validates passwords', () => {
+  it('validates password mismatch', () => {
     component.userForm = component.buildForm();
 
     let passwordControl = component.userForm.get('passwords').get('password');
@@ -49,22 +49,24 @@ describe('ReactiveFormComponent', () => {
     passwordControl.setValue('asd456AD');
     passwordControl.markAsDirty();
 
-
     passwordConfirmationControl.setValue('asd456AE');
     passwordConfirmationControl.markAsDirty();
 
     component.validateControls( component.userForm.controls );
     expect( component.formErrors['passwords'] ).toMatch('must match');
+  });
 
-    passwordControl.setValue('foobar');
-    passwordConfirmationControl.setValue('foobar');
+  it('validates password match', () => {
+    component.userForm = component.buildForm();
 
-    component.validateControls( component.userForm.controls );
-    expect( component.formErrors['password'] ).toMatch('uppercase and lowercase');
-    expect( component.formErrors['passwordConfirmation'] ).toMatch('uppercase and lowercase');
+    let passwordControl = component.userForm.get('passwords').get('password');
+    let passwordConfirmationControl = component.userForm.get('passwords').get('passwordConfirmation');
 
     passwordControl.setValue('asd456AD');
+    passwordControl.markAsDirty();
+
     passwordConfirmationControl.setValue('asd456AD');
+    passwordConfirmationControl.markAsDirty();
 
     component.validateControls( component.userForm.controls );
     expect( Object.keys(component.formErrors).length ).toBe(0);

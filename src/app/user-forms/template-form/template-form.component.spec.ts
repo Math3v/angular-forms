@@ -48,6 +48,22 @@ describe('TemplateFormComponent', () => {
     expect( de.queryAll( By.css('input[name="passwordConfirmation"]') ).length ).toBe(1);
   });
 
+  it('contains name validators', () => {
+    expect( de.queryAll( By.css('input[name="name"][required]')).length ).toBe(1);
+  });
+
+  it('contains street validators', () => {
+    expect( de.queryAll( By.css('input[name="street"][required]')).length ).toBe(1);
+    expect( de.queryAll( By.css('input[name="street"][minlength]')).length ).toBe(1);
+    expect( de.queryAll( By.css('input[name="street"][pattern]')).length ).toBe(1);
+  });
+
+  it('contains number validators', () => {
+    expect( de.queryAll( By.css('input[name="number"][min]')).length ).toBe(1);
+    expect( de.queryAll( By.css('input[name="number"][max]')).length ).toBe(1);
+    expect( de.queryAll( By.css('input[name="number"][required]')).length ).toBe(1);
+  });
+
   it('validates password mismatch', (done) => {
     fixture.whenStable().then(() => {
       de.query( By.css('input[name="password"') ).nativeElement.value = 'asd456AD';

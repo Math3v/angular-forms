@@ -1,5 +1,5 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReactiveFormComponent } from './reactive-form.component';
@@ -38,6 +38,40 @@ describe('ReactiveFormComponent', () => {
     expect( form.get('address').get('number') ).toBeTruthy();
     expect( form.get('passwords').get('password') ).toBeTruthy();
     expect( form.get('passwords').get('passwordConfirmation') ).toBeTruthy();
+  });
+
+  it('contains name validators', () => {
+    let form: FormGroup = component.buildForm();
+    let nameControl: AbstractControl = form.get('name');
+
+    nameControl.setValue('');
+    expect( nameControl.errors['required'] ).toBeTruthy();
+  });
+
+  it('contains street validators', () => {
+    let form: FormGroup = component.buildForm();
+    let streetControl: AbstractControl = form.get('address.street');
+
+    streetControl.setValue('');
+    expect( streetControl.errors['required'] ).toBeTruthy();
+
+    streetControl.setValue('s');
+    expect( streetControl.errors['minlength'] ).toBeTruthy();
+    expect( streetControl.errors['pattern'] ).toBeTruthy();
+  });
+
+  it('contains number validators', () => {
+    let form: FormGroup = component.buildForm();
+    let numberControl: AbstractControl = form.get('address.number');
+
+    numberControl.setValue('');
+    expect( numberControl.errors['required'] ).toBeTruthy();
+
+    numberControl.setValue('4');
+    expect( numberControl.errors['min'] ).toBeTruthy();
+
+    numberControl.setValue('201');
+    expect( numberControl.errors['max'] ).toBeTruthy();
   });
 
   it('validates password mismatch', () => {

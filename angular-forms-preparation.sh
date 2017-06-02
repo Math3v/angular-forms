@@ -7,7 +7,7 @@ node --version
 npm --version
 
 # Install Angular-CLI
-npm install -g @angular/cli
+npm install -g @angular/cli@1.0.0
 
 # Clone the starters and reference repositories
 git clone -b template-starter $REPO template-starter-angular-forms

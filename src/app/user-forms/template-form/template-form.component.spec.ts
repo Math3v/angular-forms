@@ -42,29 +42,29 @@ describe('TemplateFormComponent', () => {
 
   it('contains user form inputs', () => {
     expect( de.queryAll( By.css('input[name="name"]') ).length ).toBe(1);
-    expect( de.queryAll( By.css('input[name="street"]') ).length ).toBe(1);
-    expect( de.queryAll( By.css('input[name="number"]') ).length ).toBe(1);
-    expect( de.queryAll( By.css('input[name="password"]') ).length ).toBe(1);
-    expect( de.queryAll( By.css('input[name="passwordConfirmation"]') ).length ).toBe(1);
+    //expect( de.queryAll( By.css('input[name="street"]') ).length ).toBe(1);
+    //expect( de.queryAll( By.css('input[name="number"]') ).length ).toBe(1);
+    //expect( de.queryAll( By.css('input[name="password"]') ).length ).toBe(1);
+    //expect( de.queryAll( By.css('input[name="passwordConfirmation"]') ).length ).toBe(1);
   });
 
   it('contains name validators', () => {
     expect( de.queryAll( By.css('input[name="name"][required]')).length ).toBe(1);
   });
 
-  it('contains street validators', () => {
+  xit('contains street validators', () => {
     expect( de.queryAll( By.css('input[name="street"][required]')).length ).toBe(1);
     expect( de.queryAll( By.css('input[name="street"][minlength]')).length ).toBe(1);
     expect( de.queryAll( By.css('input[name="street"][pattern]')).length ).toBe(1);
   });
 
-  it('contains number validators', () => {
+  xit('contains number validators', () => {
     expect( de.queryAll( By.css('input[name="number"][min]')).length ).toBe(1);
     expect( de.queryAll( By.css('input[name="number"][max]')).length ).toBe(1);
     expect( de.queryAll( By.css('input[name="number"][required]')).length ).toBe(1);
   });
 
-  it('validates password mismatch', (done) => {
+  xit('validates password mismatch', (done) => {
     fixture.whenStable().then(() => {
       de.query( By.css('input[name="password"') ).nativeElement.value = 'asd456AD';
       de.query( By.css('input[name="password"') ).nativeElement.dispatchEvent( inputEvent );
@@ -77,7 +77,7 @@ describe('TemplateFormComponent', () => {
     });
   });
 
-  it('validates password match', (done) => {
+  xit('validates password match', (done) => {
     fixture.whenStable().then(() => {
       de.query( By.css('input[name="password"') ).nativeElement.value = 'asd456AD';
       de.query( By.css('input[name="password"') ).nativeElement.dispatchEvent( inputEvent );

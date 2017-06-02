@@ -18,8 +18,8 @@
 
     <div class="form-group">
       <label for="street">Street: </label>
-      <input type="text" class="form-control" name="street" id="street" [(ngModel)]="user.address.street" #street="ngModel" required minlength="3" pattern="[A-Za-z]{3,}">
-      <div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
+      <!-- Street input here -->
+      <!-- div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
         <div [hidden]="!street.errors.required">
           Street is required
         </div>
@@ -29,13 +29,13 @@
         <div [hidden]="!street.errors.pattern">
           Street must contain only letters
         </div>
-      </div>
+      </div -->
     </div>
 
     <div class="form-group">
       <label for="number">Number: </label>
-      <input type="number" class="form-control" name="number" id="number" [(ngModel)]="user.address.number" #number="ngModel" required min="5" max="200">
-      <div *ngIf="number.errors && (number.dirty || number.touched)" class="alert alert-danger">
+      <!-- Number input here -->
+      <!-- div *ngIf="number.errors && (number.dirty || number.touched)" class="alert alert-danger">
         <div [hidden]="!number.errors.required">
           Number is required
         </div>
@@ -45,15 +45,15 @@
         <div [hidden]="!number.errors.max">
           Number must be less than 200
         </div>
-      </div>
+      </div -->
     </div>
 
   </fieldset>
 
   <div class="form-group">
     <label for="password">Password: </label>
-    <input type="text" class="form-control" name="password" id="password" [(ngModel)]="user.address.password" #password="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="passwordConfirmation">
-    <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
+    <!-- Password input here -->
+    <!-- div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
       <div [hidden]="!password.errors.required">
         Password is required
       </div>
@@ -63,13 +63,13 @@
       <div [hidden]="!password.errors.equalToControl">
         Password needs to match password confirmation
       </div>
-    </div>
+    </div -->
   </div>
 
   <div class="form-group">
     <label for="passwordConfirmation">Password confirmation: </label>
-    <input type="text" class="form-control" name="passwordConfirmation" id="passwordConfirmation" [(ngModel)]="user.address.passwordConfirmation" #passwordConfirmation="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [equalToControl]="password">
-    <div *ngIf="passwordConfirmation.errors && (passwordConfirmation.dirty || passwordConfirmation.touched)" class="alert alert-danger">
+    <!-- Password confirmation input here -->
+    <!-- div *ngIf="passwordConfirmation.errors && (passwordConfirmation.dirty || passwordConfirmation.touched)" class="alert alert-danger">
       <div [hidden]="!passwordConfirmation.errors.required">
         Password confirmation is required
       </div>
@@ -79,7 +79,7 @@
       <div [hidden]="!passwordConfirmation.errors.equalToControl">
         Password confirmation needs to match password
       </div>
-    </div>
+    </div -->
   </div>
 
 </form>

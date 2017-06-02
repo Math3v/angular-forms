@@ -24,6 +24,8 @@ export function maxValidatorFactory(max: number): ValidatorFn {
 
 export function passwordValidatorFactory(controlName: string, validatorName: string): ValidatorFn {
   return (group: FormGroup): {[key: string]: any} => {
-    return group.get(controlName).value === group.get(validatorName).value ? null : { 'mismatch': true };
+    // return null if group controlName and validatorName fields are equal
+    // return object with 'mismatch' as a key and true as a value otherwise
+    return null;
   };
 }

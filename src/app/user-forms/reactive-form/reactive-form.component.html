@@ -16,7 +16,7 @@
 
     <div class="form-group">
       <label for="street">Street: </label>
-      <input type="text" class="form-control" formControlName="street">
+      <!-- Street input here -->
       <div *ngFor="let error of formErrors['street']" class="alert alert-danger">
         {{ error }}
       </div>
@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <label for="number">Number: </label>
-      <input type="number" class="form-control" formControlName="number">
+      <!-- Number input here -->
       <div *ngFor="let error of formErrors['number']" class="alert alert-danger">
         {{ error }}
       </div>
@@ -34,7 +34,7 @@
   <div formGroupName="passwords">
     <div class="form-group">
       <label for="password">Password: </label>
-      <input type="text" class="form-control" formControlName="password">
+      <!-- Password input here -->
       <div *ngFor="let error of formErrors['password']" class="alert alert-danger">
         {{ error }}
       </div>
@@ -42,7 +42,7 @@
 
     <div class="form-group">
       <label for="passwordConfirmation">Password confirmation: </label>
-      <input type="text" class="form-control" formControlName="passwordConfirmation">
+      <!-- Password confirmation input here -->
       <div *ngFor="let error of formErrors['passwordConfirmation']" class="alert alert-danger">
         {{ error }}
       </div>

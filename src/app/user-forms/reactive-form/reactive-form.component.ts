@@ -39,27 +39,9 @@ export class ReactiveFormComponent implements OnInit {
         Validators.required
       ],
       address: this.fb.group({
-        street: [this.user.address.street, [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern('[A-Za-z]{3,}')
-        ]],
-        number: [this.user.address.number, [
-          Validators.required,
-          minValidatorFactory(5),
-          maxValidatorFactory(200)
-        ]]
       }),
       passwords: this.fb.group({
-        password: ['', [
-          Validators.required,
-          Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
-        ]],
-        passwordConfirmation: ['', [
-          Validators.required,
-          Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
-        ]]
-      }, { validator: passwordValidatorFactory('password', 'passwordConfirmation') })
+      })
     });
   }
 
